@@ -23,18 +23,10 @@ def calculate_aspect_ratio(eye):
     aspect_ratio_eye = (poi_A + poi_B) / (2 * poi_C)
     return aspect_ratio_eye
 
-# Cài đặt thời gian chờ giữa các khung hình để giảm tải xử lý
-frame_skip_interval = 5
-frame_count = 0
-
 while True:
     ret, frame = cap.read()
     if not ret:
         break
-
-    frame_count += 1
-    if frame_count % frame_skip_interval != 0:
-        continue
 
     gray_scale = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -71,7 +63,7 @@ while True:
         average_eye_aspect_ratio = round(average_eye_aspect_ratio, 2)
 
         # Phát hiện tình trạng buồn ngủ dựa trên tỉ lệ khung hình của mắt
-        if average_eye_aspect_ratio < 0.25:
+        if average_eye_aspect_ratio < 0.2:
             cv2.putText(frame, "DROWSINESS DETECTED", (50, 100), cv2.FONT_HERSHEY_PLAIN, 2, (21, 56, 210), 3)
             cv2.putText(frame, "Alert!!!! WAKE UP", (50, 450), cv2.FONT_HERSHEY_PLAIN, 2, (21, 56, 212), 3)
 
